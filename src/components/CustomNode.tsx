@@ -1,9 +1,12 @@
+import { useCallback } from "react";
 import { Handle, Position } from "reactflow";
+import { useReactFlow } from "reactflow";
 
 // TODO: refer reactflow node props
 interface CustomNodeProps {
   type: string;
   selected: boolean;
+  id: string;
   data: {
     label: string;
     description: string;
@@ -18,7 +21,35 @@ interface CustomNodeProps {
   };
 }
 
-export const CustomNode = ({ type, selected, data }: CustomNodeProps) => {
+export const CustomNode = ({ type, selected, id, data }: CustomNodeProps) => {
+  const { setNodes } = useReactFlow();
+
+  const onFieldChange = useCallback(
+    (fieldKey: string, value: string | number) => {
+      setNodes((nodes) =>
+        nodes.map((node) => {
+          if (node.id === id) {
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                fields: {
+                  ...node.data.fields,
+                  [fieldKey]: {
+                    ...node.data.fields?.[fieldKey],
+                    value,
+                  },
+                },
+              },
+            };
+          }
+          return node;
+        })
+      );
+    },
+    [id, setNodes]
+  );
+
   return (
     <div
       className={`bg-white p-4 py-2 rounded-lg shadow-md border border-gray-${
@@ -33,7 +64,8 @@ export const CustomNode = ({ type, selected, data }: CustomNodeProps) => {
             <input
               type={field.type}
               placeholder={field.label}
-              defaultValue={field.value}
+              value={field.value}
+              onChange={(e) => onFieldChange(key, e.target.value)}
               className="px-2 py-1 my-2 text-xs border rounded"
             />
           </div>
