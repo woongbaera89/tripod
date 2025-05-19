@@ -16,7 +16,7 @@ export const Toolbar = () => {
         <button
           onClick={executeFlow}
           disabled={isRunning}
-          className="bg-green-400 font-bold text-xl p-3 px-6 rounded-md line-clamp-1 text-ellipsis"
+          className="bg-green-400 font-bold text-xl p-3 px-6 rounded-md line-clamp-1 text-ellipsis break-all"
         >
           {isRunning ? `Message: ${message.slice(0, 50)}` : "RUN"}
         </button>
@@ -41,13 +41,13 @@ const AgentScreen = ({ src }: { src: string }) => {
 
   return (
     <div
-      className="fixed w-3/4 h-3/4 right-0 bottom-16 m-8 z-50 origin-bottom-right"
+      className="fixed w-3/4 h-3/4 right-0 bottom-16 m-8 z-50 origin-bottom-right transition-all duration-500"
       style={{
         transform: collapsed ? "scale(0.2)" : "scale(1)",
       }}
     >
       <div className="relative w-full h-full shadow-2xl">
-        <iframe src={src} className="w-full h-full" />
+        <iframe src={src} className="w-full h-full bg-white" />
         {collapsed ? (
           <button
             onClick={() => setCollapsed(!collapsed)}

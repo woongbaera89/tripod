@@ -71,7 +71,12 @@ export const CustomNode = ({ type, selected, id, data }: CustomNodeProps) => {
           </div>
         ))}
       </div>
-      {type !== "reset" && <Handle type="source" position={Position.Bottom} />}
+      {type !== "reset" && (
+        <Handle
+          type="source"
+          position={type === "openUrl" ? Position.Right : Position.Bottom}
+        />
+      )}
     </div>
   );
 };

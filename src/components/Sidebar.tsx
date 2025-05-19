@@ -9,8 +9,11 @@ const Sidebar = () => {
 
   return (
     <aside className="w-64 h-full bg-white border-r border-gray-200 p-4">
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold mb-2">Node Templates</h3>
+      <div className="flex flex-col gap-4">
+        <h3 className="text-2xl font-semibold">Tripod</h3>
+        <p className="text-gray-500">
+          Drag and drop nodes to create your workflow.
+        </p>
         <div className="space-y-2">
           {customNodes.map(({ color, description, label, type }) => (
             <div
