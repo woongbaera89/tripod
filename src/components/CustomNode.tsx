@@ -18,7 +18,7 @@ interface CustomNodeProps {
   };
 }
 
-const CustomNode = ({ type, selected, data }: CustomNodeProps) => {
+export const CustomNode = ({ type, selected, data }: CustomNodeProps) => {
   return (
     <div
       className={`bg-white p-4 py-2 rounded-lg shadow-md border border-gray-${
@@ -43,5 +43,3 @@ const CustomNode = ({ type, selected, data }: CustomNodeProps) => {
     </div>
   );
 };
-
-export default CustomNode;

@@ -15,7 +15,8 @@ import Sidebar from "./Sidebar";
 import { initialNodes, initialEdges } from "@/data/initialNodes";
 import { useDeleteKey } from "@/hooks/useDeleteKey";
 import { useFlowEvents } from "@/hooks/useFlowEvents";
-import CustomNode from "./CustomNode";
+import { CustomNode } from "./CustomNode";
+import { Toolbar } from "./Toolbar";
 
 const nodeTypes = {
   start: CustomNode,
@@ -40,7 +41,7 @@ const FlowComponent = () => {
   useDeleteKey(setNodes, setEdges);
 
   return (
-    <div className="w-full h-screen flex">
+    <div className="w-full h-screen flex relative">
       <Sidebar />
       <div className="flex-1 h-full">
         <ReactFlow
@@ -60,6 +61,7 @@ const FlowComponent = () => {
           <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
         </ReactFlow>
       </div>
+      <Toolbar />
     </div>
   );
 };
