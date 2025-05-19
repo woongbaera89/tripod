@@ -13,9 +13,16 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import Sidebar from "./Sidebar";
-import { initialNodes, initialEdges } from "@/data/initialFlowStates";
+import { initialNodes, initialEdges } from "@/data/initialNodes";
 import { useDeleteKey } from "@/hooks/useDeleteKey";
 import { useFlowEvents } from "@/hooks/useFlowEvents";
+import CustomNode from "./nodes/CustomNode";
+
+const nodeTypes = {
+  default: CustomNode,
+  input: CustomNode,
+  output: CustomNode,
+};
 
 const FlowComponent = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -24,18 +31,18 @@ const FlowComponent = () => {
     useState<ReactFlowInstance | null>(null);
 
   const { onConnect, onDragOver, onDrop } = useFlowEvents(
-    reactFlowInstance,
     nodes,
     setNodes,
-    setEdges
+    setEdges,
+    reactFlowInstance
   );
 
   useDeleteKey(setNodes, setEdges);
 
   return (
-    <div className="w-full h-screen flex flex-row">
+    <div className="w-full h-screen flex">
       <Sidebar />
-      <div className="flex-grow">
+      <div className="flex-1 h-full">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -45,6 +52,7 @@ const FlowComponent = () => {
           onDragOver={onDragOver}
           onDrop={onDrop}
           onInit={setReactFlowInstance}
+          nodeTypes={nodeTypes}
           fitView
           deleteKeyCode={["Delete", "Backspace"]}
         >

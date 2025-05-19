@@ -1,12 +1,13 @@
 import { useCallback } from "react";
 import { Connection, Edge, Node, ReactFlowInstance } from "reactflow";
 import { addEdge } from "reactflow";
+import { nodeTypes } from "@/data/nodeTypes";
 
 export const useFlowEvents = (
-  reactFlowInstance: ReactFlowInstance | null,
   nodes: Node[],
   setNodes: (updater: (nodes: Node[]) => Node[]) => void,
-  setEdges: (updater: (edges: Edge[]) => Edge[]) => void
+  setEdges: (updater: (edges: Edge[]) => Edge[]) => void,
+  reactFlowInstance: ReactFlowInstance | null
 ) => {
   const onConnect = useCallback(
     (params: Connection | Edge) => setEdges((eds) => addEdge(params, eds)),
@@ -36,11 +37,15 @@ export const useFlowEvents = (
         y: event.clientY,
       });
 
+      const nodeType = nodeTypes.find((n) => n.type === type);
       const newNode: Node = {
         id: `${nodes.length + 1}`,
         type,
         position,
-        data: { label: `${type} Node` },
+        data: {
+          label: nodeType?.label || type,
+          description: nodeType?.description || "",
+        },
       };
 
       setNodes((nds) => nds.concat(newNode));
