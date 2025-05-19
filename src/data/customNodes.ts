@@ -29,7 +29,7 @@ export const customNodes: CustomNode[] = [
         type: "string",
         label: "URL",
         value:
-          "https://nextrows.com/new?p=Create+a+sheet+from+the+following+URL%3A+https://news.naver.com/section/105",
+          "https://nextrows.com/f/qz0pc2/s/6sczts?p=Add+data+with+latest+with+a+new+sheet",
       },
     },
   },
