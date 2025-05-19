@@ -1,6 +1,9 @@
 import { Handle, Position } from "reactflow";
 
+// TODO: refer reactflow node props
 interface CustomNodeProps {
+  type: string;
+  selected: boolean;
   data: {
     label: string;
     description: string;
@@ -15,12 +18,14 @@ interface CustomNodeProps {
   };
 }
 
-const CustomNode = ({ data }: CustomNodeProps) => {
+const CustomNode = ({ type, selected, data }: CustomNodeProps) => {
   return (
     <div
-      className={`bg-white p-4 py-2 rounded-lg shadow-md border-${data.color}-500`}
+      className={`bg-white p-4 py-2 rounded-lg shadow-md border border-gray-${
+        selected ? 500 : 100
+      } `}
     >
-      <Handle type="target" position={Position.Top} />
+      {type !== "start" && <Handle type="target" position={Position.Top} />}
       <div className="flex flex-col">
         <div className="font-bold">{data.label}</div>
         {Object.entries(data.fields ?? {}).map(([key, field]) => (
@@ -34,7 +39,7 @@ const CustomNode = ({ data }: CustomNodeProps) => {
           </div>
         ))}
       </div>
-      <Handle type="source" position={Position.Bottom} />
+      {type !== "reset" && <Handle type="source" position={Position.Bottom} />}
     </div>
   );
 };

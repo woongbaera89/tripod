@@ -46,7 +46,7 @@ export const useFlowEvents = (
           label: nodeType?.label || type,
           description: nodeType?.description || "",
           color: nodeType?.color || "gray",
-          fields: nodeType?.fields || {},
+          fields: { ...nodeType?.fields },
         },
       };
 
