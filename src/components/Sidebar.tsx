@@ -1,5 +1,5 @@
 import React from "react";
-import { nodeTypes } from "@/data/nodeTypes";
+import { customNodes } from "@/data/customNodes";
 
 const Sidebar = () => {
   const onDragStart = (event: React.DragEvent, nodeType: string) => {
@@ -12,15 +12,15 @@ const Sidebar = () => {
       <div className="mb-4">
         <h3 className="text-lg font-semibold mb-2">Node Templates</h3>
         <div className="space-y-2">
-          {nodeTypes.map((node) => (
+          {customNodes.map(({ color, description, label, type }) => (
             <div
-              key={node.type}
-              className={`p-3 border border-${node.color}-500 rounded cursor-move bg-${node.color}-50 hover:bg-${node.color}-100 transition-colors`}
-              onDragStart={(event) => onDragStart(event, node.type)}
+              key={type}
+              className={`p-3 border border-${color}-500 rounded cursor-move bg-${color}-50 hover:bg-${color}-100 transition-colors`}
+              onDragStart={(event) => onDragStart(event, type)}
               draggable
             >
-              <div className="font-medium">{node.label}</div>
-              <div className="text-sm text-gray-500">{node.description}</div>
+              <div className="font-medium">{label}</div>
+              <div className="text-sm text-gray-500">{description}</div>
             </div>
           ))}
         </div>

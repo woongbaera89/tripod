@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { Connection, Edge, Node, ReactFlowInstance } from "reactflow";
 import { addEdge } from "reactflow";
-import { nodeTypes } from "@/data/nodeTypes";
+import { customNodes } from "@/data/customNodes";
 
 export const useFlowEvents = (
   nodes: Node[],
@@ -37,7 +37,7 @@ export const useFlowEvents = (
         y: event.clientY,
       });
 
-      const nodeType = nodeTypes.find((n) => n.type === type);
+      const nodeType = customNodes.find((n) => n.type === type);
       const newNode: Node = {
         id: `${nodes.length + 1}`,
         type,
@@ -45,6 +45,8 @@ export const useFlowEvents = (
         data: {
           label: nodeType?.label || type,
           description: nodeType?.description || "",
+          color: nodeType?.color || "gray",
+          fields: nodeType?.fields || {},
         },
       };
 

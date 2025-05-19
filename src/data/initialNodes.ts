@@ -1,32 +1,34 @@
 import { Node, Edge } from "reactflow";
-import { nodeTypes } from "./nodeTypes";
+import { CustomNode, customNodes } from "./customNodes";
 
 const createInitialNode = (
-  type: string,
+  type: CustomNode["type"],
   position: { x: number; y: number }
 ): Node => {
-  const nodeType = nodeTypes.find((n) => n.type === type);
+  const { label, description, fields } = customNodes.find(
+    (n) => n.type === type
+  )!;
   return {
     id: type,
     type,
     position,
     data: {
-      label: nodeType?.label || type,
-      description: nodeType?.description || "",
-      fields: nodeType?.fields || {},
+      label,
+      description,
+      fields,
     },
   };
 };
 
 export const initialNodes: Node[] = [
-  createInitialNode("start", { x: 250, y: 25 }),
-  createInitialNode("delay", { x: 150, y: 125 }),
-  createInitialNode("openUrl", { x: 350, y: 325 }),
-  createInitialNode("reset", { x: 250, y: 475 }),
+  createInitialNode("start", { x: 300, y: 25 }),
+  createInitialNode("openUrl", { x: 150, y: 125 }),
+  createInitialNode("delay", { x: 350, y: 300 }),
+  createInitialNode("reset", { x: 300, y: 450 }),
 ];
 
 export const initialEdges: Edge[] = [
-  { id: "e1-2", source: "start", target: "delay" },
-  { id: "e2-3", source: "delay", target: "openUrl" },
-  { id: "e3-4", source: "openUrl", target: "reset" },
+  { id: "e1-2", source: "start", target: "openUrl" },
+  { id: "e2-3", source: "openUrl", target: "delay" },
+  { id: "e3-4", source: "delay", target: "reset" },
 ];

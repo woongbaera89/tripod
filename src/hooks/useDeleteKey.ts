@@ -9,7 +9,7 @@ export const useDeleteKey = (
 
   const onKeyDown = useCallback(
     (event: KeyboardEvent) => {
-      if (event.key === "Delete" || event.key === "Backspace") {
+      if (event.key === "Delete") {
         const selectedNodes = getNodes().filter((node) => node.selected);
         const selectedEdges = getEdges().filter((edge) => edge.selected);
 

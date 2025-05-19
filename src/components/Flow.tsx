@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import ReactFlow, {
-  MiniMap,
   Controls,
   Background,
   useNodesState,
@@ -16,12 +15,13 @@ import Sidebar from "./Sidebar";
 import { initialNodes, initialEdges } from "@/data/initialNodes";
 import { useDeleteKey } from "@/hooks/useDeleteKey";
 import { useFlowEvents } from "@/hooks/useFlowEvents";
-import CustomNode from "./nodes/CustomNode";
+import CustomNode from "./CustomNode";
 
 const nodeTypes = {
-  default: CustomNode,
-  input: CustomNode,
-  output: CustomNode,
+  start: CustomNode,
+  delay: CustomNode,
+  openUrl: CustomNode,
+  reset: CustomNode,
 };
 
 const FlowComponent = () => {
@@ -57,7 +57,6 @@ const FlowComponent = () => {
           deleteKeyCode={["Delete", "Backspace"]}
         >
           <Controls />
-          <MiniMap />
           <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
         </ReactFlow>
       </div>
