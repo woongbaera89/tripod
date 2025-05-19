@@ -1,5 +1,11 @@
-import Flow from "@/components/Flow";
+"use client";
+
+import { Flow } from "@/components/Flow";
 
 export default function Home() {
-  return <Flow />;
+  return (
+    <Flow.Provider>
+      <Flow />
+    </Flow.Provider>
+  );
 }
