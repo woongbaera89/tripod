@@ -4,10 +4,11 @@ import { useReactFlow } from "reactflow";
 
 export const Toolbar = () => {
   const reactFlowInstance = useReactFlow();
-  const { isRunning, message, agentUrl, executeFlow } = useNodeExecution(
-    reactFlowInstance.getNodes(),
-    reactFlowInstance.getEdges()
-  );
+  const { isRunning, message, agentUrl, executeFlow, terminateFlow } =
+    useNodeExecution(
+      reactFlowInstance.getNodes(),
+      reactFlowInstance.getEdges()
+    );
 
   return (
     <>
@@ -19,6 +20,14 @@ export const Toolbar = () => {
         >
           {isRunning ? `Message: ${message}` : "RUN"}
         </button>
+        {isRunning && (
+          <button
+            onClick={terminateFlow}
+            className="bg-red-400 font-bold text-xl p-3 px-6 rounded-md line-clamp-1 text-ellipsis"
+          >
+            STOP
+          </button>
+        )}
       </div>
       <AgentScreen src={agentUrl} />
     </>
@@ -32,7 +41,7 @@ const AgentScreen = ({ src }: { src: string }) => {
 
   return (
     <div
-      className="fixed w-3/4 h-3/4 right-0 bottom-0 m-8 z-50 origin-bottom-right"
+      className="fixed w-3/4 h-3/4 right-0 bottom-16 m-8 z-50 origin-bottom-right"
       style={{
         transform: collapsed ? "scale(0.2)" : "scale(1)",
       }}

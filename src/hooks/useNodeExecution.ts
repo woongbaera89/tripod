@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Node, Edge } from "reactflow";
 
 function delay(ms: number) {
@@ -6,11 +6,14 @@ function delay(ms: number) {
 }
 
 export const useNodeExecution = (nodes: Node[], edges: Edge[]) => {
+  const ternimationRef = useRef(false);
   const [isRunning, setIsRunning] = useState(false);
   const [message, setMessage] = useState("");
   const [agentUrl, setAgentUrl] = useState("");
 
   const executeNode = async (node: Node) => {
+    if (ternimationRef.current) return;
+
     await delay(1000);
     switch (node.type) {
       case "start":
@@ -47,11 +50,19 @@ export const useNodeExecution = (nodes: Node[], edges: Edge[]) => {
       case "reset":
         // 리셋 노드는 프로세스를 다시 시작
         setMessage("[Reset] Job reset");
+        setAgentUrl("");
         return findStartNode();
 
       default:
         return null;
     }
+  };
+
+  const terminateFlow = () => {
+    ternimationRef.current = true;
+    setIsRunning(false);
+    setMessage("[Terminate] Job terminated");
+    setAgentUrl("");
   };
 
   const findStartNode = () => {
@@ -65,6 +76,7 @@ export const useNodeExecution = (nodes: Node[], edges: Edge[]) => {
   };
 
   const executeFlow = async () => {
+    ternimationRef.current = false;
     setIsRunning(true);
     setMessage("[Start] Job starting...");
     let currentNode = findStartNode();
@@ -75,5 +87,5 @@ export const useNodeExecution = (nodes: Node[], edges: Edge[]) => {
     setIsRunning(false);
   };
 
-  return { executeFlow, isRunning, message, agentUrl };
+  return { executeFlow, terminateFlow, isRunning, message, agentUrl };
 };
