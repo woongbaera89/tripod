@@ -7,12 +7,15 @@ function delay(ms: number) {
 
 export const useNodeExecution = (nodes: Node[], edges: Edge[]) => {
   const ternimationRef = useRef(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [message, setMessage] = useState("");
   const [agentUrl, setAgentUrl] = useState("");
 
   const executeNode = async (node: Node) => {
-    if (ternimationRef.current) return;
+    if (ternimationRef.current) {
+      return null;
+    }
 
     await delay(1000);
     switch (node.type) {
@@ -27,10 +30,12 @@ export const useNodeExecution = (nodes: Node[], edges: Edge[]) => {
         const delayTime = (node.data.fields?.delay?.value ?? 0) * 1000;
         // setMessage(`[Delay] wait for ${delayTime}ms...`);
         let remainingTime = delayTime;
-        const interval = setInterval(() => {
+        intervalRef.current = setInterval(() => {
           setMessage(`[Delay] wait for ${remainingTime}ms...`);
           if (remainingTime <= 0) {
-            clearInterval(interval);
+            if (intervalRef.current) {
+              clearInterval(intervalRef.current);
+            }
             setMessage("[Delay] done");
           }
           remainingTime -= 1000;
@@ -60,6 +65,9 @@ export const useNodeExecution = (nodes: Node[], edges: Edge[]) => {
 
   const terminateFlow = () => {
     ternimationRef.current = true;
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
     setIsRunning(false);
     setMessage("[Terminate] Job terminated");
     setAgentUrl("");

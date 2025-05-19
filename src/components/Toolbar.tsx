@@ -18,7 +18,7 @@ export const Toolbar = () => {
           disabled={isRunning}
           className="bg-green-400 font-bold text-xl p-3 px-6 rounded-md line-clamp-1 text-ellipsis"
         >
-          {isRunning ? `Message: ${message}` : "RUN"}
+          {isRunning ? `Message: ${message.slice(0, 50)}` : "RUN"}
         </button>
         {isRunning && (
           <button
@@ -58,7 +58,7 @@ const AgentScreen = ({ src }: { src: string }) => {
         ) : (
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="absolute -top-12 right-0 p-4 bg-black/50 text-white flex items-center justify-center"
+            className="absolute -top-12 right-0 -mt-1 p-4 bg-black/50 text-white flex items-center justify-center"
           >
             <ExpandIcon />
           </button>
