@@ -7,7 +7,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="absolute left-0 top-0 h-full w-64 bg-white border-r border-gray-200 p-4 z-10">
+    <aside className="h-full w-64 bg-white border-r border-gray-200 p-6">
       <div className="mb-4">
         <h3 className="text-lg font-semibold mb-2">Templates</h3>
         <div className="space-y-2">

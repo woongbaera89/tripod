@@ -33,9 +33,9 @@ const FlowComponent = () => {
   useDeleteKey(setNodes, setEdges);
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-screen flex flex-row">
       <Sidebar />
-      <div className="w-full h-full">
+      <div className="flex-grow">
         <ReactFlow
           nodes={nodes}
           edges={edges}
