@@ -4,4 +4,4 @@ Tripod is a visual workflow automation tool built with React and ReactFlow. It a
 
 # Demo
 
-https://tripod-one.vercel.app/
+https://tripod-one.vercel.app ( Optimized on desktop )
